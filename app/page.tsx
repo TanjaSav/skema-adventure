@@ -14,10 +14,10 @@ export default function HomePage() {
   }
 
   return (
-    <main className="min-h-screen overflow-hidden bg-gradient-to-b from-[#FEFAEE] to-[#F8E5BD]">
+    <main className="min-h-[100dvh] overflow-x-hidden bg-gradient-to-b from-[#FEFAEE] to-[#F8E5BD]">
       <Header showStep={false} showTeam={false} />
 
-      <section className="mx-auto grid min-h-[calc(100vh-56px)] w-full max-w-[1440px] grid-cols-1 items-center px-4 py-6 md:h-[calc(100vh-56px)] md:grid-cols-[1fr_1px_1fr] md:px-8 md:py-0 lg:px-10 xl:px-16 2xl:px-24">
+      <section className="mx-auto grid min-h-[calc(100dvh-56px)] w-full max-w-[1440px] grid-cols-1 items-center px-4 py-6 md:min-h-[calc(100dvh-56px)] md:grid-cols-[1fr_1px_1fr] md:px-8 md:py-0 lg:px-10 xl:px-16 2xl:px-24">
         <div className="flex w-full items-center justify-center md:h-full">
           <Image
             src="/img/forest.png"
@@ -26,7 +26,7 @@ export default function HomePage() {
             height={430}
             priority
             unoptimized
-            className="h-auto w-full max-w-[330px] object-contain md:max-h-[calc(100vh-130px)] md:max-w-[360px] lg:max-w-[500px] xl:max-w-[580px] 2xl:max-w-[620px]"
+            className="h-auto w-full max-w-[330px] object-contain md:max-h-[calc(100dvh-130px)] md:max-w-[360px] lg:max-w-[500px] xl:max-w-[580px] 2xl:max-w-[620px]"
           />
         </div>
 

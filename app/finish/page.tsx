@@ -23,7 +23,7 @@ export default function FinishPage() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-[#fff8e8] p-6 text-center">
+    <main className="flex min-h-[100dvh] flex-col items-center justify-center bg-[#fff8e8] p-6 text-center">
       <h1 className="text-4xl font-bold text-green-900">
         Leiðangri lokið!
       </h1>

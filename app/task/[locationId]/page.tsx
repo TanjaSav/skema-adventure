@@ -10,11 +10,11 @@ export default function TaskPage() {
   // Continue to QR scanner or the next step.
   function goToNextStep() {
     localStorage.setItem("team_current_step", "2");
-    router.push("/scan");
+    router.push("/map/location-2");
   }
 
   return (
-    <main className="min-h-screen overflow-hidden bg-gradient-to-b from-[#FEFAEE] to-[#F8E5BD]">
+    <main className="min-h-[100dvh] overflow-x-hidden bg-gradient-to-b from-[#FEFAEE] to-[#F8E5BD]">
       <Header
         showStep={false}
         showAge={true}
@@ -22,7 +22,7 @@ export default function TaskPage() {
         showTeam={true}
       />
 
-      <section className="mx-auto grid min-h-[calc(100vh-56px)] w-full max-w-[1040px] grid-cols-1 items-start px-4 py-8 md:h-[calc(100vh-56px)] md:grid-cols-[420px_1px_420px] md:gap-10 md:px-6 md:pt-[72px] lg:gap-12">
+      <section className="mx-auto grid min-h-[calc(100dvh-56px)] w-full max-w-[1040px] grid-cols-1 items-start px-4 py-8 md:min-h-[calc(100dvh-56px)] md:grid-cols-[1fr_1px_1fr] md:gap-10 md:px-6 md:pt-[72px] lg:gap-12">
         <div className="flex w-full justify-center">
           <div className="flex w-full max-w-[360px] flex-col items-center">
             <div className="mb-6 flex items-center gap-2 text-[#123F35]">
@@ -61,7 +61,7 @@ export default function TaskPage() {
           </div>
         </div>
 
-        <div className="hidden h-[520px] w-px bg-[#d6b98c] md:block" />
+        <div className="hidden h-[calc(76vh-43px)] w-px self-center bg-[#d6b98c] md:block" />
 
         <div className="flex w-full justify-center">
           <div className="flex w-full max-w-[360px] flex-col items-start">
