@@ -15,6 +15,8 @@ type HeaderProps = {
   teamName?: string;
   showStep?: boolean;
   showTeam?: boolean;
+  showAge?: boolean;
+  showMap?: boolean;
   onTeamNameChange?: (name: string) => void;
 };
 
@@ -33,6 +35,24 @@ const stepOptions = [
     label: "Stig 3",
     value: 3,
     icon: "/img/level3.svg",
+  },
+];
+
+const ageOptions = [
+  {
+    id: "9-10",
+    label: "9-10 ára",
+    className: "bg-[#D7F5D6]",
+  },
+  {
+    id: "11-12",
+    label: "11-12 ára",
+    className: "bg-[#D9EAFB]",
+  },
+  {
+    id: "13-15",
+    label: "13-15 ára",
+    className: "bg-[#E8D7FF]",
   },
 ];
 
@@ -64,6 +84,8 @@ export function Header({
   teamName = "Liðsnafn",
   showStep = true,
   showTeam = true,
+  showAge = false,
+  showMap = true,
   onTeamNameChange,
 }: HeaderProps) {
   const [isStepMenuOpen, setIsStepMenuOpen] = useState(false);
@@ -79,6 +101,11 @@ export function Header({
   );
 
   const currentTeamName = useLocalStorageValue("team_name", teamName);
+
+  const selectedAgeId = useLocalStorageValue("age_category_id", "9-10");
+
+  const selectedAge =
+    ageOptions.find((age) => age.id === selectedAgeId) ?? ageOptions[0];
 
   // Get icon for the currently selected step.
   function getCurrentStepIcon() {
@@ -132,7 +159,7 @@ export function Header({
   return (
     <>
       <header className="min-h-14 w-full rounded-b-lg bg-[#7CC879] text-[#123F35]">
-        <div className="mx-auto flex min-h-14 w-full max-w-[1200px] items-center justify-between gap-3 px-4 md:px-10 lg:px-16">
+        <div className="mx-auto flex min-h-14 w-full max-w-[1440px] items-center justify-between gap-3 px-4 md:px-8 lg:px-10 xl:px-16 2xl:px-24">
           <Link href="/" className="flex shrink-0 items-center">
             <Image
               src="/img/skema-logo.svg"
@@ -145,7 +172,7 @@ export function Header({
             />
           </Link>
 
-          <nav className="flex items-center gap-3 text-sm font-medium md:gap-7 md:text-xl lg:gap-9">
+          <nav className="flex items-center gap-3 text-[18px] font-medium md:gap-7 lg:gap-9">
             {showStep && (
               <div ref={stepMenuRef} className="relative">
                 <button
@@ -174,7 +201,7 @@ export function Header({
                           onClick={() =>
                             selectStep(option.label, option.value)
                           }
-                          className="flex cursor-pointer items-center gap-2 text-left text-sm font-medium text-[#123F35] md:text-xl"
+                          className="flex cursor-pointer items-center gap-2 text-left text-[18px] font-medium text-[#123F35]"
                         >
                           <Image
                             src={option.icon}
@@ -193,20 +220,31 @@ export function Header({
               </div>
             )}
 
-            <Link
-              href="/map"
-              className="flex cursor-pointer items-center gap-1.5 md:gap-2"
-            >
-              <Image
-                src="/img/map.svg"
-                alt=""
-                width={26}
-                height={26}
-                className="h-5 w-5 md:h-7 md:w-7"
-              />
+            {showAge && (
+              <Link
+                href="/team"
+                className={`rounded-md border border-[#123F35] px-3 py-[2px] text-[12px] font-medium leading-tight text-[#123F35] ${selectedAge.className}`}
+              >
+                {selectedAge.label}
+              </Link>
+            )}
 
-              <span>Kort</span>
-            </Link>
+            {showMap && (
+              <Link
+                href="/map"
+                className="flex cursor-pointer items-center gap-1.5 md:gap-2"
+              >
+                <Image
+                  src="/img/map.svg"
+                  alt=""
+                  width={26}
+                  height={26}
+                  className="h-5 w-5 md:h-7 md:w-7"
+                />
+
+                <span>Kort</span>
+              </Link>
+            )}
 
             <button
               type="button"
