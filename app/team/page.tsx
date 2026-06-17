@@ -1,16 +1,42 @@
 // "use client";
 
 // import Image from "next/image";
+// import { useState } from "react";
 // import { useRouter } from "next/navigation";
 // import { Header } from "@/components/header";
 
-// export default function HomePage() {
-//   const router = useRouter();
+// const ageOptions = [
+//   {
+//     id: "9-10",
+//     label: "9-10 ára",
+//     className: "bg-[#D7F5D6]",
+//   },
+//   {
+//     id: "11-12",
+//     label: "11-12 ára",
+//     className: "bg-[#D9EAFB]",
+//   },
+//   {
+//     id: "13-15",
+//     label: "13-15 ára",
+//     className: "bg-[#E8D7FF]",
+//   },
+// ];
 
-//   // Start the game flow with a temporary age category.
-//   function startGame() {
-//     localStorage.setItem("age_category_id", "test-age");
-//     router.push("/team");
+// export default function TeamPage() {
+//   const router = useRouter();
+//   const [selectedAge, setSelectedAge] = useState("9-10");
+
+//   // Save selected age category and continue to the map.
+//   function continueGame() {
+//     localStorage.setItem("age_category_id", selectedAge);
+//     localStorage.setItem("team_current_step", "1");
+
+//     if (!localStorage.getItem("team_name")) {
+//       localStorage.setItem("team_name", "Liðsnafn");
+//     }
+
+//     router.push("/map");
 //   }
 
 //   return (
@@ -35,25 +61,44 @@
 //         <div className="flex w-full items-center justify-center md:h-full">
 //           <div className="flex w-full max-w-[300px] flex-col items-start lg:max-w-[374px]">
 //             <h1 className="text-[22px] font-bold leading-tight text-[#123F35] md:text-[24px] lg:text-[28px] xl:text-[30px] 2xl:text-[32px]">
-//               Velkomin í SKEMA
-//               <br />
-//               ÆVINTÝRI!
+//               SKEMA ÆVINTÝRI
 //             </h1>
 
-//             <p className="mt-5 max-w-[300px] text-[14px] font-medium leading-tight text-black md:text-[15px] lg:mt-7 lg:text-[18px] xl:text-[19px]">
-//               Lærðu, kannaðu og leystu
-//               <br />
-//               skemmtileg verkefni úti í
-//               <br />
-//               náttúrunni
-//             </p>
+//             <div className="mt-10">
+//               <p className="text-[14px] font-medium leading-tight text-black md:text-[15px] lg:text-[18px] xl:text-[19px]">
+//                 Veldu aldurshóp
+//               </p>
+
+//               <div className="mt-5 flex flex-wrap gap-3">
+//                 {ageOptions.map((age) => {
+//                   const isSelected = selectedAge === age.id;
+
+//                   return (
+//                     <button
+//                       key={age.id}
+//                       type="button"
+//                       onClick={() => setSelectedAge(age.id)}
+//                       className={`cursor-pointer rounded-md border px-3 py-1 text-[11px] font-medium text-[#123F35] transition ${
+//                         age.className
+//                       } ${
+//                         isSelected
+//                           ? "border-[#123F35] ring-2 ring-[#123F35]/20"
+//                           : "border-[#123F35]/50"
+//                       }`}
+//                     >
+//                       {age.label}
+//                     </button>
+//                   );
+//                 })}
+//               </div>
+//             </div>
 
 //             <button
 //               type="button"
-//               onClick={startGame}
-//               className="mt-7 flex cursor-pointer items-center justify-center gap-[6px] rounded-md border border-[#123F35] bg-[#81CA7D] px-4 py-1 text-[12px] font-bold text-[#123F35] md:mt-9 md:text-[13px]"
+//               onClick={continueGame}
+//               className="mt-16 flex cursor-pointer items-center justify-center gap-[6px] rounded-md border border-[#123F35] bg-[#81CA7D] px-4 py-1 text-[12px] font-bold text-[#123F35] md:text-[13px]"
 //             >
-//               <span>BYRJA</span>
+//               <span>HALDA ÁFRAM</span>
 
 //               <Image
 //                 src="/img/arrow-right.svg"
@@ -70,7 +115,7 @@
 //               width={210}
 //               height={160}
 //               priority
-//               className="mt-7 h-auto w-[135px] self-center lg:mt-9 lg:w-[190px] xl:w-[210px]"
+//               className="mt-10 h-auto w-[135px] self-center lg:w-[190px] xl:w-[210px]"
 //               style={{ height: "auto" }}
 //             />
 //           </div>
@@ -80,19 +125,46 @@
 //   );
 // }
 
+
 "use client";
 
 import Image from "next/image";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Header } from "@/components/header";
 
-export default function HomePage() {
-  const router = useRouter();
+const ageOptions = [
+  {
+    id: "9-10",
+    label: "9-10 ára",
+    className: "bg-[#D7F5D6]",
+  },
+  {
+    id: "11-12",
+    label: "11-12 ára",
+    className: "bg-[#D9EAFB]",
+  },
+  {
+    id: "13-15",
+    label: "13-15 ára",
+    className: "bg-[#E8D7FF]",
+  },
+];
 
-  // Start the game flow with a temporary age category.
-  function startGame() {
-    localStorage.setItem("age_category_id", "test-age");
-    router.push("/team");
+export default function TeamPage() {
+  const router = useRouter();
+  const [selectedAge, setSelectedAge] = useState("9-10");
+
+  // Save selected age category and continue to the map.
+  function continueGame() {
+    localStorage.setItem("age_category_id", selectedAge);
+    localStorage.setItem("team_current_step", "1");
+
+    if (!localStorage.getItem("team_name")) {
+      localStorage.setItem("team_name", "Liðsnafn");
+    }
+
+    router.push("/map");
   }
 
   return (
@@ -115,29 +187,46 @@ export default function HomePage() {
         <div className="hidden h-[76%] w-px bg-[#d6b98c] md:block" />
 
         <div className="flex w-full items-center justify-center md:h-full">
-          <div className="flex w-full max-w-[300px] flex-col items-start lg:max-w-[374px]">
+          <div className="flex w-full max-w-[300px] flex-col items-start lg:max-w-[374px] ">
             <h1 className="min-h-[74px] text-[22px] font-bold leading-tight text-[#123F35] md:text-[24px] lg:text-[28px] xl:text-[30px] 2xl:text-[32px]">
-              Velkomin í SKEMA
-              <br />
-              ÆVINTÝRI!
+              SKEMA ÆVINTÝRI
             </h1>
 
             <div className="mt-5 min-h-[92px] lg:mt-7">
-              <p className="max-w-[300px] text-[14px] font-medium leading-tight text-black md:text-[15px] lg:text-[18px] xl:text-[19px]">
-                Lærðu, kannaðu og leystu
-                <br />
-                skemmtileg verkefni úti í
-                <br />
-                náttúrunni
+              <p className="text-[14px] font-medium leading-tight text-black md:text-[15px] lg:text-[18px] xl:text-[19px]">
+                Veldu aldurshóp
               </p>
+
+              <div className="mt-5 flex flex-wrap gap-3">
+                {ageOptions.map((age) => {
+                  const isSelected = selectedAge === age.id;
+
+                  return (
+                    <button
+                      key={age.id}
+                      type="button"
+                      onClick={() => setSelectedAge(age.id)}
+                      className={`cursor-pointer rounded-md border px-3 py-1 text-[11px] font-medium text-[#123F35] transition ${
+                        age.className
+                      } ${
+                        isSelected
+                          ? "border-[#123F35] ring-2 ring-[#123F35]/20"
+                          : "border-[#123F35]/50"
+                      }`}
+                    >
+                      {age.label}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
             <button
               type="button"
-              onClick={startGame}
+              onClick={continueGame}
               className="mt-7 flex cursor-pointer items-center justify-center gap-[6px] rounded-md border border-[#123F35] bg-[#81CA7D] px-4 py-1 text-[12px] font-bold text-[#123F35] md:mt-9 md:text-[13px]"
             >
-              <span>BYRJA</span>
+              <span>HALDA ÁFRAM</span>
 
               <Image
                 src="/img/arrow-right.svg"
