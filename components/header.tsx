@@ -2,13 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { FormEvent, useState } from "react";
 import {
-  FormEvent,
-  useEffect,
-  useRef,
-  useState,
-  useSyncExternalStore,
-} from "react";
+  setLocalStorageValue,
+  useLocalStorageValue,
+} from "@/lib/use-local-storage-value";
 
 type HeaderProps = {
   stepLabel?: string;
@@ -19,24 +17,6 @@ type HeaderProps = {
   showMap?: boolean;
   onTeamNameChange?: (name: string) => void;
 };
-
-const stepOptions = [
-  {
-    label: "Stig 1",
-    value: 1,
-    icon: "/img/level1.svg",
-  },
-  {
-    label: "Stig 2",
-    value: 2,
-    icon: "/img/level2.svg",
-  },
-  {
-    label: "Stig 3",
-    value: 3,
-    icon: "/img/level3.svg",
-  },
-];
 
 const ageOptions = [
   {
@@ -56,90 +36,31 @@ const ageOptions = [
   },
 ];
 
-// Read localStorage safely without hydration mismatch.
-function useLocalStorageValue(key: string, fallbackValue: string) {
-  return useSyncExternalStore(
-    (callback) => {
-      window.addEventListener("storage", callback);
-      window.addEventListener(`local-storage:${key}`, callback);
-
-      return () => {
-        window.removeEventListener("storage", callback);
-        window.removeEventListener(`local-storage:${key}`, callback);
-      };
-    },
-    () => localStorage.getItem(key) || fallbackValue,
-    () => fallbackValue
-  );
-}
-
-// Save localStorage value and notify this browser tab.
-function setLocalStorageValue(key: string, value: string) {
-  localStorage.setItem(key, value);
-  window.dispatchEvent(new Event(`local-storage:${key}`));
-}
-
 export function Header({
-  stepLabel = "Stig",
   teamName = "Liðsnafn",
-  showStep = true,
   showTeam = true,
   showAge = false,
   showMap = true,
   onTeamNameChange,
 }: HeaderProps) {
-  const [isStepMenuOpen, setIsStepMenuOpen] = useState(false);
   const [isTeamModalOpen, setIsTeamModalOpen] = useState(false);
   const [isRulesModalOpen, setIsRulesModalOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
 
-  const stepMenuRef = useRef<HTMLDivElement>(null);
-
-  const currentStepLabel = useLocalStorageValue(
-    "selected_step_label",
-    stepLabel
-  );
-
   const currentTeamName = useLocalStorageValue("team_name", teamName);
-
   const selectedAgeId = useLocalStorageValue("age_category_id", "9-10");
 
   const selectedAge =
     ageOptions.find((age) => age.id === selectedAgeId) ?? ageOptions[0];
 
-  // Get icon for the currently selected step.
-  function getCurrentStepIcon() {
-    const selectedStep = stepOptions.find(
-      (option) => option.label === currentStepLabel
-    );
-
-    return selectedStep?.icon ?? "/img/age-level.svg";
+  function openTeamModal() {
+    setInputValue(currentTeamName === "Liðsnafn" ? "" : currentTeamName);
+    setIsTeamModalOpen(true);
   }
 
-  // Close the step dropdown when the user clicks outside of it.
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        stepMenuRef.current &&
-        !stepMenuRef.current.contains(event.target as Node)
-      ) {
-        setIsStepMenuOpen(false);
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  // Save selected step label locally.
-  function selectStep(label: string, value: number) {
-    setLocalStorageValue("selected_step_label", label);
-    setLocalStorageValue("selected_step_value", String(value));
-
-    setIsStepMenuOpen(false);
+  function closeTeamModal() {
+    setInputValue("");
+    setIsTeamModalOpen(false);
   }
 
   // Save the team name to localStorage and update the UI.
@@ -173,57 +94,10 @@ export function Header({
           </Link>
 
           <nav className="flex items-center gap-3 text-[18px] font-medium md:gap-7 lg:gap-9">
-            {showStep && (
-              <div ref={stepMenuRef} className="relative">
-                <button
-                  type="button"
-                  onClick={() => setIsStepMenuOpen((isOpen) => !isOpen)}
-                  className="flex cursor-pointer items-center gap-1.5 md:gap-2"
-                >
-                  <Image
-                    src={getCurrentStepIcon()}
-                    alt=""
-                    width={24}
-                    height={24}
-                    className="h-5 w-5 md:h-6 md:w-6"
-                  />
-
-                  <span>{currentStepLabel}</span>
-                </button>
-
-                {isStepMenuOpen && (
-                  <div className="absolute -left-3 top-[38px] z-40 w-[128px] cursor-pointer rounded-b-xl bg-[#D7F5D6] px-3 py-2 md:-left-4 md:top-[42px] md:w-[136px] md:px-4">
-                    <div className="flex flex-col gap-3">
-                      {stepOptions.map((option) => (
-                        <button
-                          key={option.value}
-                          type="button"
-                          onClick={() =>
-                            selectStep(option.label, option.value)
-                          }
-                          className="flex cursor-pointer items-center gap-2 text-left text-[18px] font-medium text-[#123F35]"
-                        >
-                          <Image
-                            src={option.icon}
-                            alt=""
-                            width={24}
-                            height={24}
-                            className="h-5 w-5 md:h-6 md:w-6"
-                          />
-
-                          <span>{option.label}</span>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
-
             {showAge && (
               <Link
                 href="/team"
-                className={`rounded-md border border-[#123F35] px-3 py-[2px] text-[12px] font-medium leading-tight text-[#123F35] ${selectedAge.className}`}
+                className={`rounded-md border border-[#123F35] px-3 py-1.5 text-[12px] font-medium leading-tight text-[#123F35] ${selectedAge.className}`}
               >
                 {selectedAge.label}
               </Link>
@@ -265,12 +139,7 @@ export function Header({
             {showTeam && (
               <button
                 type="button"
-                onClick={() => {
-                  setInputValue(
-                    currentTeamName === "Liðsnafn" ? "" : currentTeamName
-                  );
-                  setIsTeamModalOpen(true);
-                }}
+                onClick={openTeamModal}
                 className="flex cursor-pointer items-center gap-1.5 md:gap-2"
               >
                 <Image
@@ -281,7 +150,9 @@ export function Header({
                   className="h-5 w-5 md:h-7 md:w-7"
                 />
 
-                <span className="hidden sm:inline">{currentTeamName}</span>
+                <span className="hidden max-w-[160px] truncate sm:inline">
+                  {currentTeamName}
+                </span>
               </button>
             )}
           </nav>
@@ -325,38 +196,69 @@ export function Header({
       )}
 
       {isTeamModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-          <div className="w-full max-w-md rounded-2xl bg-[#fff8e8] p-6 shadow-xl">
-            <h2 className="text-2xl font-bold text-green-900">Nafn liðs</h2>
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="team-modal-title"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
+          onClick={closeTeamModal}
+        >
+          <div
+            className="w-full max-w-[360px] rounded-2xl border border-[#123F35] bg-gradient-to-b from-[#FEFAEE] to-[#F8E5BD] p-5 text-[#123F35] shadow-xl"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="relative flex items-center justify-center">
+              <div className="flex items-center justify-center gap-2">
+                <Image
+                  src="/img/group-avatar.svg"
+                  alt=""
+                  width={28}
+                  height={28}
+                  className="h-7 w-7"
+                />
 
-            <p className="mt-2 text-sm text-green-900">
-              Sláðu inn nafn liðsins
-            </p>
+                <h2
+                  id="team-modal-title"
+                  className="text-center text-[18px] font-bold leading-none text-[#123F35]"
+                >
+                  NAFN LIÐS
+                </h2>
+              </div>
+
+              <button
+                type="button"
+                onClick={closeTeamModal}
+                aria-label="Loka"
+                className="absolute right-0 top-1/2 flex h-7 w-7 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-[#123F35] bg-[#FEFAEE] text-[18px] font-bold leading-none text-[#123F35]"
+              >
+                ×
+              </button>
+            </div>
 
             <form onSubmit={saveTeamName} className="mt-6">
+              <label
+                htmlFor="teamNameInput"
+                className="block text-center text-[14px] font-medium leading-tight text-black md:text-[15px]"
+              >
+                Sláðu inn nafn liðsins
+              </label>
+
               <input
+                id="teamNameInput"
                 value={inputValue}
                 onChange={(event) => setInputValue(event.target.value)}
-                placeholder="Til dæmis: Refirnir"
-                className="w-full rounded-xl border border-green-700 bg-white p-4 text-green-900 outline-none"
+                placeholder="T.d. Refir"
+                className="mt-4 h-[36px] w-full rounded-md border border-[#123F35] bg-[#E8F3EC] pl-2 pr-3 text-left text-[14px] font-medium text-[#123F35] outline-none placeholder:text-[#123F35]/60"
                 autoFocus
               />
 
-              <div className="mt-6 flex justify-end gap-3">
-                <button
-                  type="button"
-                  onClick={() => setIsTeamModalOpen(false)}
-                  className="cursor-pointer rounded-xl border border-green-700 px-5 py-3 font-bold text-green-900"
-                >
-                  Hætta við
-                </button>
-
+              <div className="mt-6 flex items-center justify-center">
                 <button
                   type="submit"
                   disabled={!inputValue.trim()}
-                  className="cursor-pointer rounded-xl bg-green-500 px-5 py-3 font-bold text-white disabled:opacity-20"
+                  className="flex cursor-pointer items-center justify-center rounded-md border border-[#123F35] bg-[#81CA7D] px-5 py-2 text-[12px] font-bold text-[#123F35] disabled:cursor-not-allowed disabled:opacity-40"
                 >
-                  Vista
+                  VISTA
                 </button>
               </div>
             </form>

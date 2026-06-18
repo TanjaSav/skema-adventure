@@ -1,40 +1,29 @@
 "use client";
 
 import Image from "next/image";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { Header } from "@/components/header";
+import { useLocalStorageValue } from "@/lib/use-local-storage-value";
 
 export default function TeamNamePage() {
   const router = useRouter();
-  const [teamName, setTeamName] = useState("");
-
-  // Restore team name only if it belongs to the current age group.
-  useEffect(() => {
-    const selectedAgeId = localStorage.getItem("age_category_id") ?? "9-10";
-    const savedTeamNameAge = localStorage.getItem("team_name_age_category_id");
-    const savedTeamName = localStorage.getItem("team_name") ?? "";
-
-    if (savedTeamNameAge === selectedAgeId) {
-      setTeamName(savedTeamName);
-      return;
-    }
-
-    setTeamName("");
-    localStorage.removeItem("team_name");
-  }, []);
+  const selectedAgeId = useLocalStorageValue("age_category_id", "9-10");
+  const savedTeamNameAge = useLocalStorageValue("team_name_age_category_id", "");
+  const savedTeamName = useLocalStorageValue("team_name", "");
+  const restoredTeamName =
+    savedTeamNameAge === selectedAgeId ? savedTeamName : "";
 
   // Save team name and continue to the first task.
   function startGame(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const trimmedTeamName = teamName.trim();
+    const formData = new FormData(event.currentTarget);
+    const trimmedTeamName = String(formData.get("teamName") ?? "").trim();
 
     if (!trimmedTeamName) {
       return;
     }
-
-    const selectedAgeId = localStorage.getItem("age_category_id") ?? "9-10";
 
     localStorage.setItem("team_name", trimmedTeamName);
     localStorage.setItem("team_name_age_category_id", selectedAgeId);
@@ -50,7 +39,7 @@ export default function TeamNamePage() {
 
   return (
     <main className="min-h-[100dvh] overflow-x-hidden bg-gradient-to-b from-[#FEFAEE] to-[#F8E5BD]">
-      <Header showStep={false} showTeam={false} showAge={true} />
+      <Header showStep={false} showTeam={false} showAge={true} showMap={false} />
 
       <section className="mx-auto grid min-h-[calc(100dvh-56px)] w-full max-w-[1440px] grid-cols-1 items-center px-4 py-6 md:min-h-[calc(100dvh-56px)] md:grid-cols-[1fr_1px_1fr] md:px-8 md:py-0 lg:px-10 xl:px-16 2xl:px-24">
         <div className="flex w-full items-center justify-center md:h-full">
@@ -84,11 +73,12 @@ export default function TeamNamePage() {
 
                 <input
                   id="teamName"
+                  name="teamName"
                   type="text"
-                  value={teamName}
-                  onChange={(event) => setTeamName(event.target.value)}
+                  key={restoredTeamName}
+                  defaultValue={restoredTeamName}
                   placeholder="T.d. Refir"
-                  className="mt-4 h-[26px] w-[150px] rounded-[4px] border border-[#123F35]/60 bg-[#E8F3EC] px-3 text-[10px] font-medium text-[#123F35] outline-none placeholder:text-[#123F35]/60 md:w-[170px]"
+                  className="mt-4 h-[38px] w-[220px] rounded-md border border-[#123F35]/60 bg-[#E8F3EC] px-4 text-[15px] font-medium text-[#123F35] outline-none placeholder:text-[#123F35]/60 md:w-[260px] lg:h-[42px] lg:text-[16px]"
                 />
 
                 <button

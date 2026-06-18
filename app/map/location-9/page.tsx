@@ -25,7 +25,7 @@ type QrScanner = {
   isScanning: boolean;
 };
 
-export default function LocationTwoMapPage() {
+export default function LocationNineMapPage() {
   const router = useRouter();
 
   const scannerRef = useRef<QrScanner | null>(null);
@@ -46,7 +46,7 @@ export default function LocationTwoMapPage() {
 
         if (!isMounted) return;
 
-        const scanner = new Html5Qrcode("qr-reader-location-2") as QrScanner;
+        const scanner = new Html5Qrcode("qr-reader-location-9") as QrScanner;
         scannerRef.current = scanner;
 
         await scanner.start(
@@ -213,13 +213,118 @@ export default function LocationTwoMapPage() {
                 />
               </Link>
 
+              <Link
+                href="/task/location-2"
+                aria-label="Fara aftur í verkefni 2"
+                className="absolute left-[48%] top-[80%]"
+              >
+                <Image
+                  src="/img/star2.svg"
+                  alt="Verkefni 2 lokið"
+                  width={28}
+                  height={28}
+                  priority
+                  className="h-[26px] w-[26px]"
+                />
+              </Link>
+
+              <Link
+                href="/task/location-3"
+                aria-label="Fara aftur í verkefni 3"
+                className="absolute left-[60%] top-[68%]"
+              >
+                <Image
+                  src="/img/star3.svg"
+                  alt="Verkefni 3 lokið"
+                  width={28}
+                  height={28}
+                  priority
+                  className="h-[26px] w-[26px]"
+                />
+              </Link>
+
+              <Link
+                href="/task/location-4"
+                aria-label="Fara aftur í verkefni 4"
+                className="absolute left-[84%] top-[38%]"
+              >
+                <Image
+                  src="/img/star4.svg"
+                  alt="Verkefni 4 lokið"
+                  width={28}
+                  height={28}
+                  priority
+                  className="h-[26px] w-[26px]"
+                />
+              </Link>
+
+              <Link
+                href="/task/location-5"
+                aria-label="Fara aftur í verkefni 5"
+                className="absolute left-[59%] top-[30%]"
+              >
+                <Image
+                  src="/img/star5.svg"
+                  alt="Verkefni 5 lokið"
+                  width={28}
+                  height={28}
+                  priority
+                  className="h-[26px] w-[26px]"
+                />
+              </Link>
+
+              <Link
+                href="/task/location-6"
+                aria-label="Fara aftur í verkefni 6"
+                className="absolute left-[44%] top-[52%]"
+              >
+                <Image
+                  src="/img/star6.svg"
+                  alt="Verkefni 6 lokið"
+                  width={28}
+                  height={28}
+                  priority
+                  className="h-[26px] w-[26px]"
+                />
+              </Link>
+
+              <Link
+                href="/task/location-7"
+                aria-label="Fara aftur í verkefni 7"
+                className="absolute left-[33%] top-[22%]"
+              >
+                <Image
+                  src="/img/star7.svg"
+                  alt="Verkefni 7 lokið"
+                  width={28}
+                  height={28}
+                  priority
+                  className="h-[26px] w-[26px]"
+                />
+              </Link>
+
+              <Link
+                href="/task/location-8"
+                aria-label="Fara aftur í verkefni 8"
+                className="absolute left-[18%] top-[33%]"
+              >
+                <Image
+                  src="/img/star8.svg"
+                  alt="Verkefni 8 lokið"
+                  width={28}
+                  height={28}
+                  priority
+                  className="h-[26px] w-[26px]"
+                />
+              </Link>
+
               <Image
-                src="/img/location2.svg"
-                alt="Location 2"
+                src="/img/location9.svg"
+                alt="Location 9"
                 width={28}
                 height={28}
                 priority
-                className="absolute left-[48%] top-[78%] h-[26px] w-[26px]"
+                className="absolute left-[21%] top-[56%] h-[26px] w-[26px]"
               />
             </div>
           </div>
@@ -231,7 +336,7 @@ export default function LocationTwoMapPage() {
           <div className="flex w-full max-w-[360px] flex-col items-start">
             <div className="flex items-center gap-2 text-[#123F35]">
               <h1 className="text-[18px] font-bold leading-none">
-                STAÐSETNING 2
+                STAÐSETNING 9
               </h1>
             </div>
 
@@ -239,8 +344,8 @@ export default function LocationTwoMapPage() {
               Skannaðu QR-kóðann sem þú finnur
               <br />á staðsetningu{" "}
               <Image
-                src="/img/location2.svg"
-                alt="Staðsetning 2"
+                src="/img/location9.svg"
+                alt="Staðsetning 9"
                 width={24}
                 height={24}
                 className="inline-block h-6 w-6 align-middle"
@@ -252,6 +357,7 @@ export default function LocationTwoMapPage() {
             <button
               type="button"
               onClick={() => {
+                localStorage.setItem("team_current_step", "9");
                 setErrorMessage("");
                 setIsScannerOpen(true);
               }}
@@ -283,7 +389,7 @@ export default function LocationTwoMapPage() {
             </p>
 
             <div className="mt-5 overflow-hidden rounded-xl border-2 border-[#123F35] bg-white p-2">
-              <div id="qr-reader-location-2" className="h-[300px] w-full" />
+              <div id="qr-reader-location-9" className="h-[300px] w-full" />
             </div>
 
             {errorMessage && (

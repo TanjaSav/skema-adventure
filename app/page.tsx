@@ -15,7 +15,7 @@ export default function HomePage() {
 
   return (
     <main className="min-h-[100dvh] overflow-x-hidden bg-gradient-to-b from-[#FEFAEE] to-[#F8E5BD]">
-      <Header showStep={false} showTeam={false} />
+      <Header showStep={false} showTeam={false} showMap={false} />
 
       <section className="mx-auto grid min-h-[calc(100dvh-56px)] w-full max-w-[1440px] grid-cols-1 items-center px-4 py-6 md:min-h-[calc(100dvh-56px)] md:grid-cols-[1fr_1px_1fr] md:px-8 md:py-0 lg:px-10 xl:px-16 2xl:px-24">
         <div className="flex w-full items-center justify-center md:h-full">
