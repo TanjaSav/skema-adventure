@@ -2,33 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ReactNode, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { Header } from "@/components/header";
-
-type LocationId =
-  | "location-1"
-  | "location-2"
-  | "location-3"
-  | "location-4"
-  | "location-5"
-  | "location-6"
-  | "location-7"
-  | "location-8"
-  | "location-9";
-
-type TaskData = {
-  locationId: LocationId;
-  step: number;
-  title: string;
-  numberIcon: string;
-  titleIcon?: string;
-  description: ReactNode;
-  taskImage: string;
-  nextRoute: string;
-  hasUploadButton?: boolean;
-  uploadButtonText?: ReactNode;
-};
+import type { LocationId, MapLocationData, TaskData } from "@/types";
 
 const tasks: Record<LocationId, TaskData> = {
   "location-1": {
@@ -55,9 +32,9 @@ const tasks: Record<LocationId, TaskData> = {
     numberIcon: "/img/number2.svg",
     description: (
       <>
-        Fylgdu leiðbeiningunum skref fyrir
+        Fylgdu leiðbeiningunum.
         <br />
-        skref eins og forriti
+        Hugsaðu eins og forritari.
       </>
     ),
     taskImage: "/img/code.svg",
@@ -193,13 +170,7 @@ const tasks: Record<LocationId, TaskData> = {
   },
 };
 
-const mapLocations: Record<
-  LocationId,
-  {
-    icon: string;
-    className: string;
-  }
-> = {
+const mapLocations: Record<LocationId, MapLocationData> = {
   "location-1": {
     icon: "/img/location1.svg",
     className: "absolute left-[22%] top-[75%] h-[24px] w-[24px]",
@@ -459,13 +430,15 @@ export default function TaskPage() {
         <div className="flex w-full justify-center">
           <div className="flex w-full max-w-[360px] flex-col items-center">
             <div className="flex w-[300px] items-center justify-center gap-2 text-[#123F35]">
-              <Image
-                src={task.numberIcon}
-                alt=""
-                width={22}
-                height={22}
-                className="h-[22px] w-[22px]"
-              />
+              <span className="flex h-6 w-6 items-center justify-center">
+                <Image
+                  src={task.numberIcon}
+                  alt=""
+                  width={22}
+                  height={22}
+                  className="h-[22px] w-[22px]"
+                />
+              </span>
 
               <h1 className="text-center text-[18px] font-bold leading-none">
                 {task.title}
@@ -482,11 +455,7 @@ export default function TaskPage() {
               )}
             </div>
 
-            <p
-              className={`w-[300px] text-center text-[14px] font-medium leading-tight text-black md:text-[15px] ${
-                task.locationId === "location-2" ? "mt-4" : "mt-8"
-              }`}
-            >
+            <p className="mt-8 w-[300px] text-center text-[14px] font-medium leading-tight text-black md:text-[15px]">
               {task.description}
             </p>
 
@@ -504,7 +473,7 @@ export default function TaskPage() {
             )}
 
             {task.locationId === "location-2" && (
-              <div className="mt-4 rounded-md border border-[#123F35] bg-white p-3">
+              <div className="mt-9 rounded-md border border-[#123F35] bg-white p-3">
                 <Image
                   src={task.taskImage}
                   alt={task.title}
@@ -636,9 +605,9 @@ export default function TaskPage() {
                   <Image
                     src="/img/camera.svg"
                     alt=""
-                    width={20}
-                    height={20}
-                    className="h-5 w-5"
+                    width={22}
+                    height={22}
+                    className="h-[22px] w-[22px]"
                   />
 
                   <span className="text-center">
@@ -663,9 +632,7 @@ export default function TaskPage() {
             <button
               type="button"
               onClick={goToNextStep}
-              className={`flex cursor-pointer items-center justify-center gap-[6px] rounded-md border border-[#123F35] bg-[#81CA7D] px-4 py-1 text-[12px] font-bold text-[#123F35] md:text-[13px] ${
-                task.locationId === "location-2" ? "mt-5" : "mt-7"
-              }`}
+              className="mt-8 flex cursor-pointer items-center justify-center gap-[6px] rounded-md border border-[#123F35] bg-[#81CA7D] px-4 py-1 text-[12px] font-bold text-[#123F35] md:text-[13px]"
             >
               <span>NÆSTA SKREF</span>
 

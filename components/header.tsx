@@ -3,16 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FormEvent, useState, useSyncExternalStore } from "react";
-
-type HeaderProps = {
-  stepLabel?: string;
-  teamName?: string;
-  showStep?: boolean;
-  showTeam?: boolean;
-  showAge?: boolean;
-  showMap?: boolean;
-  onTeamNameChange?: (name: string) => void;
-};
+import type { HeaderProps } from "@/types";
 
 const ageOptions = [
   {
@@ -116,7 +107,7 @@ export function Header({
             {showAge && (
               <Link
                 href="/team"
-                className={`rounded-md border border-[#123F35] px-3 py-1.5 text-[12px] font-medium leading-tight text-[#123F35] ${selectedAge.className}`}
+                className={`rounded-md border border-[#123F35] px-3 py-[3px] text-[13px] font-medium leading-tight text-[#123F35] ${selectedAge.className}`}
               >
                 {selectedAge.label}
               </Link>

@@ -5,25 +5,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Header } from "@/components/header";
-
-type QrScanner = {
-  start: (
-    cameraConfig: { facingMode: "environment" | "user" },
-    configuration: {
-      fps: number;
-      qrbox: {
-        width: number;
-        height: number;
-      };
-      aspectRatio?: number;
-    },
-    successCallback: (decodedText: string) => void,
-    errorCallback?: () => void
-  ) => Promise<void | null>;
-  stop: () => Promise<void>;
-  clear: () => void;
-  isScanning: boolean;
-};
+import type { QrScanner } from "@/types";
 
 export default function LocationThreeMapPage() {
   const router = useRouter();
