@@ -50,7 +50,7 @@ export default function TeamPage() {
       <Header showStep={false} showTeam={false} showMap={false} />
 
       <section className="mx-auto grid min-h-[calc(100dvh-56px)] w-full max-w-[1440px] grid-cols-1 items-center px-4 py-6 md:min-h-[calc(100dvh-56px)] md:grid-cols-[1fr_1px_1fr] md:px-8 md:py-0 lg:px-10 xl:px-16 2xl:px-24">
-        <div className="flex w-full items-center justify-center md:h-full">
+        <div className="flex w-full items-center justify-center md:h-full md:pr-8 lg:pr-10 xl:pr-16 2xl:pr-24">
           <Image
             src="/img/forest.png"
             alt="SKEMA ævintýri"
@@ -62,10 +62,10 @@ export default function TeamPage() {
           />
         </div>
 
-        <div className="hidden h-[76%] w-px bg-[#d6b98c] md:block" />
+        <div className="hidden h-[calc(76dvh-43px)] w-px self-center bg-[#d6b98c] md:block" />
 
-        <div className="flex w-full items-center justify-center md:h-full">
-          <div className="flex w-full max-w-[300px] flex-col items-start lg:max-w-[374px]">
+        <div className="flex w-full items-center justify-center md:h-full md:pl-8 lg:pl-10 xl:pl-16 2xl:pl-24">
+          <div className="mx-auto flex w-full max-w-[300px] flex-col items-start lg:max-w-[374px]">
             <div className="flex h-[230px] w-full flex-col items-start pt-4 lg:h-[258px] lg:pt-5">
               <h1 className="text-[22px] font-bold leading-tight text-[#123F35] md:text-[24px] lg:text-[28px] xl:text-[30px] 2xl:text-[32px]">
                 SKEMA ÆVINTÝRI
@@ -76,7 +76,7 @@ export default function TeamPage() {
                   Veldu aldurshóp
                 </p>
 
-                <div className="mt-4 flex flex-wrap gap-3">
+                <div className="mt-4 flex flex-wrap gap-4">
                   {ageOptions.map((age) => {
                     const isSelected = selectedAge === age.id;
 
@@ -87,7 +87,7 @@ export default function TeamPage() {
                         onClick={() =>
                           setLocalStorageValue("age_category_id", age.id)
                         }
-                        className={`cursor-pointer rounded-md border px-3 py-1 text-[11px] font-medium text-[#123F35] transition ${
+                        className={`cursor-pointer rounded-md border px-3 py-1.5 text-[14px] font-medium text-[#123F35] transition ${
                           age.className
                         } ${
                           isSelected
@@ -105,7 +105,7 @@ export default function TeamPage() {
               <button
                 type="button"
                 onClick={continueGame}
-                className="mt-10 flex cursor-pointer items-center justify-center gap-[6px] rounded-md border border-[#123F35] bg-[#81CA7D] px-4 py-1 text-[12px] font-bold text-[#123F35] md:text-[13px] lg:mt-12"
+                className="mt-10 flex cursor-pointer items-center justify-center gap-[6px] rounded-md border border-[#123F35] bg-[#81CA7D] px-4 py-1.5 text-[16px] font-bold text-[#123F35] lg:mt-12"
               >
                 <span>HALDA ÁFRAM</span>
 

@@ -2,11 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { FormEvent, useState } from "react";
-import {
-  setLocalStorageValue,
-  useLocalStorageValue,
-} from "@/lib/use-local-storage-value";
+import { FormEvent, useState, useSyncExternalStore } from "react";
 
 type HeaderProps = {
   stepLabel?: string;
@@ -35,6 +31,29 @@ const ageOptions = [
     className: "bg-[#E8D7FF]",
   },
 ];
+
+// Read localStorage safely without hydration mismatch.
+function useLocalStorageValue(key: string, fallbackValue: string) {
+  return useSyncExternalStore(
+    (callback) => {
+      window.addEventListener("storage", callback);
+      window.addEventListener(`local-storage:${key}`, callback);
+
+      return () => {
+        window.removeEventListener("storage", callback);
+        window.removeEventListener(`local-storage:${key}`, callback);
+      };
+    },
+    () => localStorage.getItem(key) || fallbackValue,
+    () => fallbackValue
+  );
+}
+
+// Save localStorage value and notify this browser tab.
+function setLocalStorageValue(key: string, value: string) {
+  localStorage.setItem(key, value);
+  window.dispatchEvent(new Event(`local-storage:${key}`));
+}
 
 export function Header({
   teamName = "Liðsnafn",
@@ -125,13 +144,15 @@ export function Header({
               onClick={() => setIsRulesModalOpen(true)}
               className="flex cursor-pointer items-center gap-1.5 md:gap-2"
             >
-              <Image
-                src="/img/rules.svg"
-                alt=""
-                width={22}
-                height={22}
-                className="h-5 w-5 md:h-6 md:w-6"
-              />
+              <span className="flex h-6 w-6 items-center justify-center">
+                <Image
+                  src="/img/rules.svg"
+                  alt=""
+                  width={22}
+                  height={22}
+                  className="h-[22px] w-[22px]"
+                />
+              </span>
 
               <span>Reglur</span>
             </button>
