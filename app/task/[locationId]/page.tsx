@@ -11,25 +11,8 @@ const tasks: Record<LocationId, TaskData> = {
   "location-1": {
     locationId: "location-1",
     step: 1,
-    title: "HÓPMYND",
+    title: "Forritaðar leiðbeiningar",
     numberIcon: "/img/number1.svg",
-    titleIcon: "/img/camera.svg",
-    description: (
-      <>
-        Standið saman og takið mynd
-        <br />í A-laga stellingu
-      </>
-    ),
-    taskImage: "/img/group-photo.jpg",
-    nextRoute: "/map/location-2",
-    hasUploadButton: true,
-  },
-
-  "location-2": {
-    locationId: "location-2",
-    step: 2,
-    title: "FORRITAÐAR LEIÐBEININGAR",
-    numberIcon: "/img/number2.svg",
     description: (
       <>
         Fylgdu leiðbeiningunum.
@@ -38,14 +21,14 @@ const tasks: Record<LocationId, TaskData> = {
       </>
     ),
     taskImage: "/img/code.svg",
-    nextRoute: "/map/location-3",
+    nextRoute: "/map/location-2",
   },
 
-  "location-3": {
-    locationId: "location-3",
-    step: 3,
+  "location-2": {
+    locationId: "location-2",
+    step: 2,
     title: "NÁTTÚRULEIT",
-    numberIcon: "/img/number3.svg",
+    numberIcon: "/img/number2.svg",
     titleIcon: "/img/search.svg",
     description: (
       <>
@@ -57,15 +40,15 @@ const tasks: Record<LocationId, TaskData> = {
       </>
     ),
     taskImage: "/img/nature.jpg",
-    nextRoute: "/map/location-4",
+    nextRoute: "/map/location-3",
     hasUploadButton: true,
   },
 
-  "location-4": {
-    locationId: "location-4",
-    step: 4,
-    title: "NÁTTÚRA",
-    numberIcon: "/img/number4.svg",
+  "location-3": {
+    locationId: "location-3",
+    step: 3,
+    title: "Náttúra",
+    numberIcon: "/img/number3.svg",
     description: (
       <>
         Myndið hring með hópnum og <br /> reynið að hafa eins mörg tré <br />{" "}
@@ -73,6 +56,18 @@ const tasks: Record<LocationId, TaskData> = {
       </>
     ),
     taskImage: "/img/nature4.png",
+    nextRoute: "/map/location-4",
+    hasUploadButton: true,
+  },
+
+  "location-4": {
+    locationId: "location-4",
+    step: 4,
+    title: "NÁTTÚRULEIT",
+    numberIcon: "/img/number4.svg",
+    titleIcon: "/img/search.svg",
+    description: <>Finndu tölur í náttúrunni</>,
+    taskImage: "/img/one.png",
     nextRoute: "/map/location-5",
     hasUploadButton: true,
   },
@@ -80,7 +75,7 @@ const tasks: Record<LocationId, TaskData> = {
   "location-5": {
     locationId: "location-5",
     step: 5,
-    title: "BRÚARÁSKORUN",
+    title: "Brúaráskorun",
     numberIcon: "/img/number5.svg",
     titleIcon: "/img/hammer.svg",
     description: (
@@ -105,7 +100,7 @@ const tasks: Record<LocationId, TaskData> = {
   "location-6": {
     locationId: "location-6",
     step: 6,
-    title: "TEIKNING",
+    title: "Teikning",
     numberIcon: "/img/number6.svg",
     titleIcon: "/img/pencil.svg",
     description: (
@@ -123,7 +118,7 @@ const tasks: Record<LocationId, TaskData> = {
   "location-7": {
     locationId: "location-7",
     step: 7,
-    title: "FLUGLEIKUR",
+    title: "Flugleikur",
     numberIcon: "/img/number7.svg",
     titleIcon: "/img/plane.svg",
     description: (
@@ -141,7 +136,7 @@ const tasks: Record<LocationId, TaskData> = {
   "location-8": {
     locationId: "location-8",
     step: 8,
-    title: "PRIKÞRAUT",
+    title: "Prikþraut",
     numberIcon: "/img/number8.svg",
     description: (
       <>
@@ -160,11 +155,16 @@ const tasks: Record<LocationId, TaskData> = {
   "location-9": {
     locationId: "location-9",
     step: 9,
-    title: "NÁTTÚRULEIT",
+    title: "HÓPMYND",
     numberIcon: "/img/number9.svg",
-    titleIcon: "/img/search.svg",
-    description: <>Finndu tölur í náttúrunni</>,
-    taskImage: "/img/one.png",
+    titleIcon: "/img/camera.svg",
+    description: (
+      <>
+        Standið saman og takið mynd
+        <br />í A-laga stellingu
+      </>
+    ),
+    taskImage: "/img/group-photo.jpg",
     nextRoute: "/finish",
     hasUploadButton: true,
   },
@@ -460,19 +460,6 @@ export default function TaskPage() {
             </p>
 
             {task.locationId === "location-1" && (
-              <div className="mt-9 overflow-hidden border border-[#123F35] bg-white">
-                <Image
-                  src={task.taskImage}
-                  alt={task.title}
-                  width={190}
-                  height={190}
-                  priority
-                  className="h-[190px] w-[190px] object-cover"
-                />
-              </div>
-            )}
-
-            {task.locationId === "location-2" && (
               <div className="mt-9 rounded-md border border-[#123F35] bg-white p-3">
                 <Image
                   src={task.taskImage}
@@ -486,7 +473,7 @@ export default function TaskPage() {
               </div>
             )}
 
-            {task.locationId === "location-3" && (
+            {task.locationId === "location-2" && (
               <div className="mt-7 overflow-hidden">
                 <Image
                   src={task.taskImage}
@@ -499,7 +486,7 @@ export default function TaskPage() {
               </div>
             )}
 
-            {task.locationId === "location-4" && (
+            {task.locationId === "location-3" && (
               <div className="mt-8 overflow-hidden">
                 <Image
                   src={task.taskImage}
@@ -508,6 +495,20 @@ export default function TaskPage() {
                   height={170}
                   priority
                   className="h-auto w-[220px] object-contain"
+                  style={{ height: "auto" }}
+                />
+              </div>
+            )}
+
+            {task.locationId === "location-4" && (
+              <div className="mt-9 overflow-hidden">
+                <Image
+                  src={task.taskImage}
+                  alt={task.title}
+                  width={120}
+                  height={180}
+                  priority
+                  className="h-auto w-[120px] object-contain"
                   style={{ height: "auto" }}
                 />
               </div>
@@ -570,15 +571,14 @@ export default function TaskPage() {
             )}
 
             {task.locationId === "location-9" && (
-              <div className="mt-9 overflow-hidden">
+              <div className="mt-9 overflow-hidden border border-[#123F35] bg-white">
                 <Image
                   src={task.taskImage}
                   alt={task.title}
-                  width={120}
-                  height={180}
+                  width={190}
+                  height={190}
                   priority
-                  className="h-auto w-[120px] object-contain"
-                  style={{ height: "auto" }}
+                  className="h-[190px] w-[190px] object-cover"
                 />
               </div>
             )}
