@@ -216,7 +216,7 @@ export default function LocationThreeMapPage() {
                 width={28}
                 height={28}
                 priority
-                className="absolute left-[60%] top-[68%] h-[26px] w-[26px]"
+                className="absolute left-[60%] top-[68%] h-[32px] w-[32px]"
               />
             </div>
           </div>
@@ -233,18 +233,21 @@ export default function LocationThreeMapPage() {
             </div>
 
             <p className="mt-10 max-w-[320px] font-medium">
-              Skannaðu QR-kóðann sem þú finnur
-              <br />á staðsetningu{" "}
+              Farðu að staðsetningunni{" "}
               <Image
                 src="/img/location3.svg"
                 alt="Staðsetning 3"
                 width={24}
                 height={24}
-                className="inline-block h-6 w-6 align-middle"
+                className="inline-block h-8 w-8 align-middle"
               />
+               <br/>sem þú sérð á kortinu.
+              
             </p>
 
-            <p className="mt-5 font-medium">Þá opnast næsta verkefni</p>
+            <p className="mt-5 font-medium">Þar finnur þú QR-kóða. Skannaðu hann, 
+              <br/> þá opnast næsta verkefni
+            </p>
 
             <button
               type="button"

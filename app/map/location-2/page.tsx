@@ -201,7 +201,7 @@ export default function LocationTwoMapPage() {
                 width={28}
                 height={28}
                 priority
-                className="absolute left-[48%] top-[78%] h-[26px] w-[26px]"
+                className="absolute left-[45%] top-[78%] h-[32px] w-[32px]"
               />
             </div>
           </div>
@@ -223,9 +223,9 @@ export default function LocationTwoMapPage() {
               <Image
                 src="/img/location2.svg"
                 alt="Staðsetning 2"
-                width={24}
-                height={24}
-                className="inline-block h-6 w-6 align-middle"
+                width={32}
+                height={32}
+                className="inline-block h-8 w-8 align-middle"
               />
             </p>
 
