@@ -216,7 +216,7 @@ export default function LocationThreeMapPage() {
                 width={28}
                 height={28}
                 priority
-                className="absolute left-[60%] top-[68%] h-[32px] w-[32px]"
+                className="absolute left-[59%] top-[67%] h-8 w-8"
               />
             </div>
           </div>

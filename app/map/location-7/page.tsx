@@ -276,7 +276,7 @@ export default function LocationSevenMapPage() {
                 width={28}
                 height={28}
                 priority
-                className="absolute left-[33%] top-[21%] h-[32px] w-[32px]"
+                className="absolute left-[32%] top-[19%] h-8 w-8"
               />
             </div>
           </div>

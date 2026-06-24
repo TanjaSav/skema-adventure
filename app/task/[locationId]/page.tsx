@@ -173,39 +173,39 @@ const tasks: Record<LocationId, TaskData> = {
 const mapLocations: Record<LocationId, MapLocationData> = {
   "location-1": {
     icon: "/img/location1.svg",
-    className: "absolute left-[22%] top-[75%] h-[24px] w-[24px]",
+    className: "absolute left-[23%] top-[73%] h-8 w-8",
   },
   "location-2": {
     icon: "/img/location2.svg",
-    className: "absolute left-[48%] top-[80%] h-[24px] w-[24px]",
+    className: "absolute left-[45%] top-[78%] h-8 w-8",
   },
   "location-3": {
     icon: "/img/location3.svg",
-    className: "absolute left-[60%] top-[68%] h-[26px] w-[26px]",
+    className: "absolute left-[59%] top-[67%] h-8 w-8",
   },
   "location-4": {
     icon: "/img/location4.svg",
-    className: "absolute left-[84%] top-[37%] h-[26px] w-[26px]",
+    className: "absolute left-[83%] top-[36%] h-8 w-8",
   },
   "location-5": {
     icon: "/img/location5.svg",
-    className: "absolute left-[59%] top-[29%] h-[26px] w-[26px]",
+    className: "absolute left-[59%] top-[27%] h-8 w-8",
   },
   "location-6": {
     icon: "/img/location6.svg",
-    className: "absolute left-[44%] top-[52%] h-[26px] w-[26px]",
+    className: "absolute left-[44%] top-[49%] h-8 w-8",
   },
   "location-7": {
     icon: "/img/location7.svg",
-    className: "absolute left-[33%] top-[22%] h-[26px] w-[26px]",
+    className: "absolute left-[32%] top-[19%] h-8 w-8",
   },
   "location-8": {
     icon: "/img/location8.svg",
-    className: "absolute left-[18%] top-[33%] h-[26px] w-[26px]",
+    className: "absolute left-[17%] top-[31%] h-8 w-8",
   },
   "location-9": {
     icon: "/img/location9.svg",
-    className: "absolute left-[21%] top-[56%] h-[26px] w-[26px]",
+    className: "absolute left-[20%] top-[55%] h-8 w-8",
   },
 };
 
@@ -257,8 +257,8 @@ export default function TaskPage() {
               <Image
                 src="/img/map.svg"
                 alt=""
-                width={28}
-                height={28}
+                width={32}
+                height={32}
                 className="h-6 w-6"
               />
 

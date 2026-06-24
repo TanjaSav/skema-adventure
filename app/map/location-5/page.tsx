@@ -246,7 +246,7 @@ export default function LocationFiveMapPage() {
                 width={28}
                 height={28}
                 priority
-                className="absolute left-[59%] top-[29%] h-[32px] w-[32px]"
+                className="absolute left-[59%] top-[27%] h-8 w-8"
               />
             </div>
           </div>

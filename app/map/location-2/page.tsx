@@ -201,7 +201,7 @@ export default function LocationTwoMapPage() {
                 width={28}
                 height={28}
                 priority
-                className="absolute left-[45%] top-[78%] h-[32px] w-[32px]"
+                className="absolute left-[45%] top-[78%] h-8 w-8"
               />
             </div>
           </div>

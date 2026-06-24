@@ -261,7 +261,7 @@ export default function LocationSixMapPage() {
                 width={28}
                 height={28}
                 priority
-                className="absolute left-[44%] top-[50%] h-[32px] w-[32px]"
+                className="absolute left-[44%] top-[49%] h-8 w-8"
               />
             </div>
           </div>

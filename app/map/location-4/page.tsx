@@ -231,7 +231,7 @@ export default function LocationFourMapPage() {
                 width={28}
                 height={28}
                 priority
-                className="absolute left-[84%] top-[37%] h-[26px] w-[26px]"
+                className="absolute left-[83%] top-[36%] h-8 w-8"
               />
             </div>
           </div>

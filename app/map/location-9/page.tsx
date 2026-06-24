@@ -306,7 +306,7 @@ export default function LocationNineMapPage() {
                 width={32}
                 height={32}
                 priority
-                className="absolute left-[21%] top-[56%] h-[32px] w-[32px]"
+                className="absolute left-[20%] top-[55%] h-8 w-8"
               />
             </div>
           </div>

@@ -291,7 +291,7 @@ export default function LocationEightMapPage() {
                 width={32}
                 height={32}
                 priority
-                className="absolute left-[18%] top-[32%] h-[32px] w-[32px]"
+                className="absolute left-[17%] top-[31%] h-8 w-8"
               />
             </div>
           </div>
