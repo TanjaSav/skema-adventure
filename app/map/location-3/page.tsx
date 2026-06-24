@@ -232,7 +232,7 @@ export default function LocationThreeMapPage() {
               </h1>
             </div>
 
-            <p className="mt-10 max-w-[320px] font-medium">
+            <p className="mt-12 max-w-[320px] font-medium">
               Farðu að staðsetningunni{" "}
               <Image
                 src="/img/location3.svg"
@@ -256,7 +256,7 @@ export default function LocationThreeMapPage() {
                 setErrorMessage("");
                 setIsScannerOpen(true);
               }}
-              className="mt-10 flex cursor-pointer items-center justify-center gap-[6px] rounded-md border border-[#123F35] bg-[#81CA7D] px-4 py-1 text-[12px] font-bold text-[#123F35] md:text-[13px] lg:mt-12"
+              className="mt-12 flex cursor-pointer items-center justify-center gap-[6px] rounded-md border border-[#123F35] bg-[#81CA7D] px-4 py-1 text-[12px] font-bold text-[#123F35] md:text-[13px] lg:mt-12"
             >
               <span>SKANNA QR-KÓÐA</span>
 
