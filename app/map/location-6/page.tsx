@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Header } from "@/components/header";
-import type { QrScanner } from "@/types";
+import type { QrScanner } from "@/types/types";
 
 export default function LocationSixMapPage() {
   const router = useRouter();

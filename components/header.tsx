@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FormEvent, useState, useSyncExternalStore } from "react";
-import type { HeaderProps } from "@/types";
+import type { HeaderProps } from "@/types/types";
 
 const ageOptions = [
   {

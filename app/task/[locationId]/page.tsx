@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRef, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { Header } from "@/components/header";
-import type { LocationId, MapLocationData, TaskData } from "@/types";
+import type { LocationId, MapLocationData, TaskData } from "@/types/types";
 
 const tasks: Record<LocationId, TaskData> = {
   "location-1": {
