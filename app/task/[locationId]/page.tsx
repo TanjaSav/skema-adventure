@@ -487,14 +487,14 @@ export default function TaskPage() {
             </p>
 
             {task.locationId === "location-1" && (
-              <div className="mt-9 rounded-md border border-[#123F35] bg-white p-3">
+              <div className="mt-9 rounded-md border border-[#123F35] bg-white">
                 <Image
                   src={task.taskImage}
                   alt={task.title}
                   width={330}
                   height={240}
                   priority
-                  className="h-auto w-[300px] object-contain md:w-[330px]"
+                  className="h-auto w-[200px] object-contain md:w-[240px]"
                   style={{ height: "auto" }}
                 />
               </div>
