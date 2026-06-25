@@ -11,6 +11,7 @@ The app guides a team through a sequence of map locations and nature-based tasks
 - TypeScript
 - Tailwind CSS 4
 - `html5-qrcode` for QR scanning
+- MongoDB for saving task result records
 - `next/image` and static assets from `public/img`
 - Browser `localStorage` for team name, age group, and current progress
 
@@ -98,6 +99,41 @@ Start the production server after building:
 
 ```bash
 npm run start
+```
+
+## Database
+
+Task completion records are saved to MongoDB through the server route `POST /api/task-results`.
+
+Configure the database connection with:
+
+```bash
+MONGODB_URI=your-mongodb-connection-string
+MONGODB_DB=skema_adventure
+```
+
+Use `.env.example` as the local template. Do not commit real `.env` files or database credentials.
+
+Photos are resized in the browser before upload. The current settings convert selected images to JPEG with a maximum side of `1280px` and quality `0.75`.
+
+Results are inserted into the `task_results` collection. Each saved result includes:
+
+- team name
+- age group
+- task location
+- task step and title
+- completion timestamp
+- uploaded photo metadata: file id, URL, file name, MIME type, and file size
+
+Photo files are stored in MongoDB GridFS using the `task_photos` bucket. MongoDB will create these collections automatically:
+
+- `task_photos.files`
+- `task_photos.chunks`
+
+Saved photos can be opened through:
+
+```text
+/api/photos/{photoFileId}
 ```
 
 ## Notes

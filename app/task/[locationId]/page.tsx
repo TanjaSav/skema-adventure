@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useRef, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { Header } from "@/components/header";
+import { resizeImage } from "@/lib/resize-image";
+import { saveTaskResult } from "@/lib/task-results";
 import type { LocationId, MapLocationData, TaskData } from "@/types/types";
 
 const tasks: Record<LocationId, TaskData> = {
@@ -47,15 +49,11 @@ const tasks: Record<LocationId, TaskData> = {
   "location-3": {
     locationId: "location-3",
     step: 3,
-    title: "Náttúra",
+    title: "NÁTTÚRULEIT",
     numberIcon: "/img/number3.svg",
-    description: (
-      <>
-        Myndið hring með hópnum og <br /> reynið að hafa eins mörg tré <br />{" "}
-        eða náttúruleg kennileiti <br /> inni í hringnum og hægt er
-      </>
-    ),
-    taskImage: "/img/nature4.png",
+    titleIcon: "/img/search.svg",
+    description: <>Finndu tölur í náttúrunni</>,
+    taskImage: "/img/one.png",
     nextRoute: "/map/location-4",
     hasUploadButton: true,
   },
@@ -63,11 +61,15 @@ const tasks: Record<LocationId, TaskData> = {
   "location-4": {
     locationId: "location-4",
     step: 4,
-    title: "NÁTTÚRULEIT",
+    title: "Náttúra",
     numberIcon: "/img/number4.svg",
-    titleIcon: "/img/search.svg",
-    description: <>Finndu tölur í náttúrunni</>,
-    taskImage: "/img/one.png",
+    description: (
+      <>
+        Myndið hring með hópnum og <br /> reynið að hafa eins mörg tré <br />{" "}
+        eða náttúruleg kennileiti <br /> inni í hringnum og hægt er
+      </>
+    ),
+    taskImage: "/img/nature4.png",
     nextRoute: "/map/location-5",
     hasUploadButton: true,
   },
@@ -118,26 +120,8 @@ const tasks: Record<LocationId, TaskData> = {
   "location-7": {
     locationId: "location-7",
     step: 7,
-    title: "Flugleikur",
-    numberIcon: "/img/number7.svg",
-    titleIcon: "/img/plane.svg",
-    description: (
-      <>
-        Gerið pappírsflugvélar og
-        <br />
-        látið þær fljúga í hring
-      </>
-    ),
-    taskImage: "/img/groupe-plane.png",
-    nextRoute: "/map/location-8",
-    hasUploadButton: true,
-  },
-
-  "location-8": {
-    locationId: "location-8",
-    step: 8,
     title: "Prikþraut",
-    numberIcon: "/img/number8.svg",
+    numberIcon: "/img/number7.svg",
     description: (
       <>
         Finndu litla pinna í skóginum.
@@ -148,6 +132,24 @@ const tasks: Record<LocationId, TaskData> = {
       </>
     ),
     taskImage: "/img/sticks.jpg",
+    nextRoute: "/map/location-8",
+    hasUploadButton: true,
+  },
+
+  "location-8": {
+    locationId: "location-8",
+    step: 8,
+    title: "Flugleikur",
+    numberIcon: "/img/number8.svg",
+    titleIcon: "/img/plane.svg",
+    description: (
+      <>
+        Gerið pappírsflugvélar og
+        <br />
+        látið þær fljúga í hring
+      </>
+    ),
+    taskImage: "/img/groupe-plane.png",
     nextRoute: "/map/location-9",
     hasUploadButton: true,
   },
@@ -226,15 +228,40 @@ export default function TaskPage() {
   const params = useParams<{ locationId: string }>();
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploadedFileName, setUploadedFileName] = useState("");
+  const [isSavingResult, setIsSavingResult] = useState(false);
+  const [saveError, setSaveError] = useState("");
 
   const locationId = getLocationId(params.locationId);
   const task = tasks[locationId];
 
   // Continue to the next map screen.
-  function goToNextStep() {
-    localStorage.setItem("team_current_step", String(task.step + 1));
-    router.push(task.nextRoute);
+  async function goToNextStep() {
+    setIsSavingResult(true);
+    setSaveError("");
+
+    try {
+      const resultFile = selectedFile ? await resizeImage(selectedFile) : null;
+
+      await saveTaskResult({
+        ageCategoryId: localStorage.getItem("age_category_id") ?? "",
+        completedAt: new Date().toISOString(),
+        file: resultFile,
+        locationId: task.locationId,
+        taskStep: task.step,
+        taskTitle: task.title,
+        teamName: localStorage.getItem("team_name") ?? "",
+      });
+
+      localStorage.setItem("team_current_step", String(task.step + 1));
+      router.push(task.nextRoute);
+    } catch (error) {
+      console.error(error);
+      setSaveError("Ekki tókst að vista niðurstöðuna. Reyndu aftur.");
+    } finally {
+      setIsSavingResult(false);
+    }
   }
 
   function openUpload() {
@@ -487,20 +514,6 @@ export default function TaskPage() {
             )}
 
             {task.locationId === "location-3" && (
-              <div className="mt-8 overflow-hidden">
-                <Image
-                  src={task.taskImage}
-                  alt={task.title}
-                  width={220}
-                  height={170}
-                  priority
-                  className="h-auto w-[220px] object-contain"
-                  style={{ height: "auto" }}
-                />
-              </div>
-            )}
-
-            {task.locationId === "location-4" && (
               <div className="mt-9 overflow-hidden">
                 <Image
                   src={task.taskImage}
@@ -509,6 +522,20 @@ export default function TaskPage() {
                   height={180}
                   priority
                   className="h-auto w-[120px] object-contain"
+                  style={{ height: "auto" }}
+                />
+              </div>
+            )}
+
+            {task.locationId === "location-4" && (
+              <div className="mt-8 overflow-hidden">
+                <Image
+                  src={task.taskImage}
+                  alt={task.title}
+                  width={220}
+                  height={170}
+                  priority
+                  className="h-auto w-[220px] object-contain"
                   style={{ height: "auto" }}
                 />
               </div>
@@ -543,12 +570,12 @@ export default function TaskPage() {
             )}
 
             {task.locationId === "location-7" && (
-              <div className="mt-9 overflow-hidden">
+              <div className="mt-7 overflow-hidden">
                 <Image
                   src={task.taskImage}
                   alt={task.title}
                   width={220}
-                  height={170}
+                  height={130}
                   priority
                   className="h-auto w-[220px] object-contain"
                   style={{ height: "auto" }}
@@ -557,12 +584,12 @@ export default function TaskPage() {
             )}
 
             {task.locationId === "location-8" && (
-              <div className="mt-7 overflow-hidden">
+              <div className="mt-9 overflow-hidden">
                 <Image
                   src={task.taskImage}
                   alt={task.title}
                   width={220}
-                  height={130}
+                  height={170}
                   priority
                   className="h-auto w-[220px] object-contain"
                   style={{ height: "auto" }}
@@ -593,6 +620,7 @@ export default function TaskPage() {
                   className="hidden"
                   onChange={(event) => {
                     const file = event.target.files?.[0];
+                    setSelectedFile(file ?? null);
                     setUploadedFileName(file?.name ?? "");
                   }}
                 />
@@ -629,12 +657,19 @@ export default function TaskPage() {
               </>
             )}
 
+            {saveError && (
+              <p className="mt-3 w-[300px] text-center text-[11px] font-medium leading-tight text-red-700">
+                {saveError}
+              </p>
+            )}
+
             <button
               type="button"
               onClick={goToNextStep}
-              className="mt-8 flex cursor-pointer items-center justify-center gap-[6px] rounded-md border border-[#123F35] bg-[#81CA7D] px-4 py-1 text-[12px] font-bold text-[#123F35] md:text-[13px]"
+              disabled={isSavingResult}
+              className="mt-8 flex cursor-pointer items-center justify-center gap-[6px] rounded-md border border-[#123F35] bg-[#81CA7D] px-4 py-1 text-[12px] font-bold text-[#123F35] disabled:cursor-not-allowed disabled:opacity-60 md:text-[13px]"
             >
-              <span>NÆSTA SKREF</span>
+              <span>{isSavingResult ? "VISTA..." : "NÆSTA SKREF"}</span>
 
               <Image
                 src="/img/arrow-right.svg"
