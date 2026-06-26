@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { DecorativeClouds } from "@/components/decorative-clouds";
 import { Header } from "@/components/header";
 import { useLocalStorageValue } from "@/lib/use-local-storage-value";
 
@@ -30,7 +31,7 @@ export default function FinishPage() {
   }
 
   return (
-    <main className="min-h-[100dvh] overflow-x-hidden bg-gradient-to-b from-[#FEFAEE] to-[#F8E5BD]">
+    <main className="relative min-h-[100dvh] overflow-x-hidden bg-gradient-to-b from-[#FEFAEE] to-[#F8E5BD]">
       <Header
         showStep={false}
         showAge={true}
@@ -38,7 +39,9 @@ export default function FinishPage() {
         showTeam={true}
       />
 
-      <section className="flex min-h-[calc(100dvh-56px)] w-full flex-col items-center justify-center px-4 py-8 text-center">
+      <DecorativeClouds />
+
+      <section className="relative z-10 flex min-h-[calc(100dvh-56px)] w-full flex-col items-center justify-center px-4 py-8 text-center">
         <h1 className="text-[20px] font-bold leading-none text-[#123F35] md:text-[22px]">
           FRÁBÆRT!
         </h1>

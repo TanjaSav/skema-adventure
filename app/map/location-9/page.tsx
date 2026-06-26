@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { DecorativeClouds } from "@/components/decorative-clouds";
 import { Header } from "@/components/header";
 import type { QrScanner } from "@/types/types";
 
@@ -145,7 +146,7 @@ export default function LocationNineMapPage() {
   }
 
   return (
-    <main className="min-h-[100dvh] overflow-x-hidden bg-gradient-to-b from-[#FEFAEE] to-[#F8E5BD]">
+    <main className="relative min-h-[100dvh] overflow-x-hidden bg-gradient-to-b from-[#FEFAEE] to-[#F8E5BD]">
       <Header
         showStep={false}
         showAge={true}
@@ -153,7 +154,9 @@ export default function LocationNineMapPage() {
         showTeam={true}
       />
 
-      <section className="mx-auto grid min-h-[calc(100dvh-56px)] w-full max-w-[1040px] grid-cols-1 items-start px-4 py-8 md:min-h-[calc(100dvh-56px)] md:grid-cols-[1fr_1px_1fr] md:gap-10 md:px-6 md:pt-[72px] lg:gap-12">
+      <DecorativeClouds />
+
+      <section className="relative z-10 mx-auto grid min-h-[calc(100dvh-56px)] w-full max-w-[1040px] grid-cols-1 items-start px-4 py-8 md:min-h-[calc(100dvh-56px)] md:grid-cols-[1fr_1px_1fr] md:gap-10 md:px-6 md:pt-[72px] lg:gap-12">
         <div className="flex w-full justify-center">
           <div className="flex w-full max-w-[360px] flex-col items-center">
             <div className="mb-6 flex items-center gap-2 text-[#123F35]">
@@ -315,14 +318,14 @@ export default function LocationNineMapPage() {
         <div className="hidden h-[calc(76vh-43px)] w-px self-center bg-[#d6b98c] md:block" />
 
         <div className="flex w-full justify-center">
-          <div className="flex w-full max-w-[360px] flex-col items-start">
+          <div className="flex w-full max-w-[360px] flex-col items-center md:items-start">
             <div className="flex items-center gap-2 text-[#123F35]">
               <h1 className="text-[18px] font-bold leading-none">
                 STAÐSETNING 9
               </h1>
             </div>
 
-            <p className="mt-12 max-w-[320px] font-medium">
+            <p className="mt-12 w-full max-w-[320px] text-start font-medium">
               Farðu að staðsetningunni{" "}
               <Image
                 src="/img/location9.svg"
@@ -335,8 +338,8 @@ export default function LocationNineMapPage() {
               
             </p>
 
-            <p className="mt-5 font-medium">Þar finnur þú QR-kóða. Skannaðu hann, 
-              <br/> þá opnast næsta verkefni
+            <p className="mt-5 w-full max-w-[320px] text-start font-medium">Þar finnur þú QR-kóða. Skannaðu hann, 
+              <br className="hidden md:block" /> þá opnast næsta verkefni
             </p>
 
             <button
@@ -396,4 +399,7 @@ export default function LocationNineMapPage() {
     </main>
   );
 }
+
+
+
 

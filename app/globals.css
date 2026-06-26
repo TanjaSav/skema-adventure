@@ -32,3 +32,54 @@ body {
   animation: location-pulse 1.6s ease-in-out infinite;
   transform-origin: center;
 }
+
+@keyframes cloud-drift {
+  0% {
+    transform: translate3d(112vw, 0, 0);
+  }
+
+  100% {
+    transform: translate3d(-28vw, 0, 0);
+  }
+}
+
+.cloud-float {
+  animation: cloud-drift 96s linear infinite;
+  will-change: transform;
+}
+
+.cloud-float-a {
+  animation-delay: -5s;
+}
+
+.cloud-float-b {
+  animation-delay: -39s;
+}
+
+.cloud-float-d {
+  animation-delay: -69s;
+}
+
+@media (min-width: 900px) and (max-width: 1100px) and (min-height: 700px) and (max-height: 820px) {
+  .cloud-float-a {
+    top: 104px;
+    width: 148px;
+  }
+
+  .cloud-float-b {
+    top: 132px;
+    width: 126px;
+  }
+
+  .cloud-float-d {
+    top: 178px;
+    width: 106px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cloud-float,
+  .location-pulse {
+    animation: none;
+  }
+}

@@ -76,7 +76,7 @@ export default function TeamPage() {
                   Veldu aldurshóp
                 </p>
 
-                <div className="mt-4 flex flex-wrap gap-4">
+                <div className="mt-4 flex w-[300px] flex-nowrap justify-between md:w-auto md:justify-start md:gap-4">
                   {ageOptions.map((age) => {
                     const isSelected = selectedAge === age.id;
 
@@ -87,7 +87,7 @@ export default function TeamPage() {
                         onClick={() =>
                           setLocalStorageValue("age_category_id", age.id)
                         }
-                        className={`cursor-pointer rounded-md border px-3 py-1.5 text-[14px] font-medium text-[#123F35] transition ${
+                        className={`shrink-0 cursor-pointer whitespace-nowrap rounded-md border px-2.5 py-1.5 text-[13px] font-medium text-[#123F35] transition md:px-3 md:text-[14px] ${
                           age.className
                         } ${
                           isSelected

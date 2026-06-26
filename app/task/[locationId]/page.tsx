@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import { DecorativeClouds } from "@/components/decorative-clouds";
 import { Header } from "@/components/header";
 import { resizeImage } from "@/lib/resize-image";
 import { saveTaskResult } from "@/lib/task-results";
@@ -271,7 +272,7 @@ export default function TaskPage() {
   }
 
   return (
-    <main className="min-h-[100dvh] overflow-x-hidden bg-gradient-to-b from-[#FEFAEE] to-[#F8E5BD]">
+    <main className="relative min-h-[100dvh] overflow-x-hidden bg-gradient-to-b from-[#FEFAEE] to-[#F8E5BD]">
       <Header
         showStep={false}
         showAge={true}
@@ -279,7 +280,9 @@ export default function TaskPage() {
         showTeam={true}
       />
 
-      <section className="mx-auto grid min-h-[calc(100dvh-56px)] w-full max-w-[1040px] grid-cols-1 items-start px-4 py-8 md:min-h-[calc(100dvh-56px)] md:grid-cols-[1fr_1px_1fr] md:gap-10 md:px-6 md:pt-[72px] lg:gap-12">
+      <DecorativeClouds />
+
+      <section className="relative z-10 mx-auto grid min-h-[calc(100dvh-56px)] w-full max-w-[1040px] grid-cols-1 items-start px-4 py-8 md:min-h-[calc(100dvh-56px)] md:grid-cols-[1fr_1px_1fr] md:gap-10 md:px-6 md:pt-[72px] lg:gap-12">
         <div className="flex w-full justify-center">
           <div className="flex w-full max-w-[360px] flex-col items-center">
             <div className="mb-6 flex items-center gap-2 text-[#123F35]">
