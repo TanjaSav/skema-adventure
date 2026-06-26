@@ -191,7 +191,7 @@ export default function LocationThreeMapPage() {
                   width={28}
                   height={28}
                   priority
-                  className="h-[26px] w-[26px]"
+                  className="h-[30px] w-[30px]"
                 />
               </Link>
 
@@ -206,7 +206,7 @@ export default function LocationThreeMapPage() {
                   width={28}
                   height={28}
                   priority
-                  className="h-[26px] w-[26px]"
+                  className="h-[30px] w-[30px]"
                 />
               </Link>
 
@@ -216,7 +216,7 @@ export default function LocationThreeMapPage() {
                 width={28}
                 height={28}
                 priority
-                className="absolute left-[59%] top-[67%] h-8 w-8"
+                className="absolute left-[59%] top-[67%] h-8 w-8 location-pulse"
               />
             </div>
           </div>
@@ -306,3 +306,4 @@ export default function LocationThreeMapPage() {
     </main>
   );
 }
+

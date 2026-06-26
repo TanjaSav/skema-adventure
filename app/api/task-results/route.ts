@@ -55,6 +55,13 @@ export async function POST(request: Request) {
     return Response.json({ error: "Invalid completedAt value." }, { status: 400 });
   }
 
+  if (!process.env.MONGODB_URI) {
+    return Response.json(
+      { skipped: true, reason: "MONGODB_URI is not configured." },
+      { status: 202 }
+    );
+  }
+
   try {
     const client = await getMongoClient();
     const db = client.db(process.env.MONGODB_DB ?? "skema_adventure");

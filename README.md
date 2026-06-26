@@ -114,6 +114,8 @@ MONGODB_DB=skema_adventure
 
 Use `.env.example` as the local template. Do not commit real `.env` files or database credentials.
 
+If `MONGODB_URI` is not set, result saving is skipped and the game still works locally. Add the environment variables later to enable persistence without changing the app code.
+
 Photos are resized in the browser before upload. The current settings convert selected images to JPEG with a maximum side of `1280px` and quality `0.75`.
 
 Results are inserted into the `task_results` collection. Each saved result includes:

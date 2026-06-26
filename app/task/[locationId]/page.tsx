@@ -120,18 +120,16 @@ const tasks: Record<LocationId, TaskData> = {
   "location-7": {
     locationId: "location-7",
     step: 7,
-    title: "Prikþraut",
+    title: "Form úr greinum",
     numberIcon: "/img/number7.svg",
     description: (
       <>
-        Finndu litla pinna í skóginum.
+        Búðu til form úr fundnum greinum
         <br />
-        Raðaðu þeim þannig að dæmið
-        <br />
-        verði rétt
+        sem lítur út eins og myndin sýnir
       </>
     ),
-    taskImage: "/img/sticks.jpg",
+    taskImage: "/img/shape.jpg",
     nextRoute: "/map/location-8",
     hasUploadButton: true,
   },
@@ -144,12 +142,16 @@ const tasks: Record<LocationId, TaskData> = {
     titleIcon: "/img/plane.svg",
     description: (
       <>
-        Gerið pappírsflugvélar og
+        Gerið pappírsflugvélar.
         <br />
-        látið þær fljúga í hring
+        Stattu í röð og sendu
+        <br />
+        flugvélina af stað.
+        <br />
+        Sjáum hver flýgur lengst!
       </>
     ),
-    taskImage: "/img/groupe-plane.png",
+    taskImage: "/img/groupe-plane.jpg",
     nextRoute: "/map/location-9",
     hasUploadButton: true,
   },
@@ -316,7 +318,7 @@ export default function TaskPage() {
                     width={28}
                     height={28}
                     priority
-                    className="h-[26px] w-[26px]"
+                    className="h-[30px] w-[30px]"
                   />
                 </Link>
               )}
@@ -333,7 +335,7 @@ export default function TaskPage() {
                     width={28}
                     height={28}
                     priority
-                    className="h-[26px] w-[26px]"
+                    className="h-[30px] w-[30px]"
                   />
                 </Link>
               )}
@@ -350,7 +352,7 @@ export default function TaskPage() {
                     width={28}
                     height={28}
                     priority
-                    className="h-[26px] w-[26px]"
+                    className="h-[30px] w-[30px]"
                   />
                 </Link>
               )}
@@ -367,7 +369,7 @@ export default function TaskPage() {
                     width={28}
                     height={28}
                     priority
-                    className="h-[26px] w-[26px]"
+                    className="h-[30px] w-[30px]"
                   />
                 </Link>
               )}
@@ -384,7 +386,7 @@ export default function TaskPage() {
                     width={28}
                     height={28}
                     priority
-                    className="h-[26px] w-[26px]"
+                    className="h-[30px] w-[30px]"
                   />
                 </Link>
               )}
@@ -401,7 +403,7 @@ export default function TaskPage() {
                     width={28}
                     height={28}
                     priority
-                    className="h-[26px] w-[26px]"
+                    className="h-[30px] w-[30px]"
                   />
                 </Link>
               )}
@@ -418,7 +420,7 @@ export default function TaskPage() {
                     width={28}
                     height={28}
                     priority
-                    className="h-[26px] w-[26px]"
+                    className="h-[30px] w-[30px]"
                   />
                 </Link>
               )}
@@ -435,7 +437,7 @@ export default function TaskPage() {
                     width={28}
                     height={28}
                     priority
-                    className="h-[26px] w-[26px]"
+                    className="h-[30px] w-[30px]"
                   />
                 </Link>
               )}
@@ -446,7 +448,7 @@ export default function TaskPage() {
                 width={28}
                 height={28}
                 priority
-                className={mapLocations[task.locationId].className}
+                className={`${mapLocations[task.locationId].className} location-pulse`}
               />
             </div>
           </div>
@@ -685,3 +687,4 @@ export default function TaskPage() {
     </main>
   );
 }
+
