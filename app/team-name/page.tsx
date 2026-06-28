@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Header } from "@/components/header";
 import { useLocalStorageValue } from "@/lib/use-local-storage-value";
@@ -11,11 +11,13 @@ export default function TeamNamePage() {
   const selectedAgeId = useLocalStorageValue("age_category_id", "9-10");
   const savedTeamNameAge = useLocalStorageValue("team_name_age_category_id", "");
   const savedTeamName = useLocalStorageValue("team_name", "");
+  const [isSavingTeam, setIsSavingTeam] = useState(false);
+  const [saveError, setSaveError] = useState("");
   const restoredTeamName =
     savedTeamNameAge === selectedAgeId ? savedTeamName : "";
 
   // Save team name and continue to the first task.
-  function startGame(event: FormEvent<HTMLFormElement>) {
+  async function startGame(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
@@ -25,12 +27,38 @@ export default function TeamNamePage() {
       return;
     }
 
+    setIsSavingTeam(true);
+    setSaveError("");
+
+    try {
+      const response = await fetch("/api/teams", {
+        body: JSON.stringify({
+          ageCategoryId: selectedAgeId,
+          teamName: trimmedTeamName,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to save team.");
+      }
+    } catch (error) {
+      console.error(error);
+      setSaveError("Ekki tókst að vista liðið. Reyndu aftur.");
+      setIsSavingTeam(false);
+      return;
+    }
+
     localStorage.setItem("team_name", trimmedTeamName);
     localStorage.setItem("team_name_age_category_id", selectedAgeId);
     localStorage.setItem("team_current_step", "1");
 
     if (selectedAgeId !== "9-10") {
       alert("Verkefni fyrir þennan aldurshóp eru ekki tilbúin enn.");
+      setIsSavingTeam(false);
       return;
     }
 
@@ -83,9 +111,10 @@ export default function TeamNamePage() {
 
                 <button
                   type="submit"
-                  className="mt-10 flex cursor-pointer items-center justify-center gap-[6px] rounded-md border border-[#123F35] bg-[#81CA7D] px-4 py-1.5 text-[16px] font-bold text-[#123F35] lg:mt-12"
+                  disabled={isSavingTeam}
+                  className="mt-10 flex cursor-pointer items-center justify-center gap-[6px] rounded-md border border-[#123F35] bg-[#81CA7D] px-4 py-1.5 text-[16px] font-bold text-[#123F35] disabled:cursor-not-allowed disabled:opacity-60 lg:mt-12"
                 >
-                  <span>BYRJA LEIK</span>
+                  <span>{isSavingTeam ? "VISTA..." : "BYRJA LEIK"}</span>
 
                   <Image
                     src="/img/arrow-right.svg"
@@ -95,6 +124,12 @@ export default function TeamNamePage() {
                     className="h-4 w-4"
                   />
                 </button>
+
+                {saveError && (
+                  <p className="mt-3 w-[260px] text-[11px] font-medium leading-tight text-red-700">
+                    {saveError}
+                  </p>
+                )}
               </form>
             </div>
 

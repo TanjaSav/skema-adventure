@@ -33,6 +33,121 @@ async function uploadPhoto(bucket: GridFSBucket, photo: File) {
   return uploadStream.id as ObjectId;
 }
 
+export async function DELETE(request: Request) {
+  if (!process.env.MONGODB_URI) {
+    return Response.json({ deletedPhotos: 0, deletedResults: 0 });
+  }
+
+  const { searchParams } = new URL(request.url);
+  const teamName = getString(searchParams.get("teamName"));
+  const ageCategoryId = getString(searchParams.get("ageCategoryId"));
+
+  if (!teamName || !ageCategoryId) {
+    return Response.json({ error: "Missing required fields." }, { status: 400 });
+  }
+
+  try {
+    const client = await getMongoClient();
+    const db = client.db(process.env.MONGODB_DB ?? "skema_adventure");
+    const collection = db.collection("task_results");
+    const teamsCollection = db.collection("teams");
+    const bucket = new GridFSBucket(db, { bucketName: "task_photos" });
+    const filter = { ageCategoryId, teamName };
+    const results = await collection
+      .find(filter, { projection: { photoFileId: 1 } })
+      .toArray();
+    const photoFileIds = results
+      .map((result) => result.photoFileId)
+      .filter((photoFileId): photoFileId is ObjectId => photoFileId instanceof ObjectId);
+
+    let deletedPhotos = 0;
+
+    for (const photoFileId of photoFileIds) {
+      try {
+        await bucket.delete(photoFileId);
+        deletedPhotos += 1;
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    const deleteResult = await collection.deleteMany(filter);
+    await teamsCollection.deleteMany(filter);
+
+    return Response.json({
+      deletedPhotos,
+      deletedResults: deleteResult.deletedCount,
+    });
+  } catch (error) {
+    console.error(error);
+    return Response.json(
+      { error: "Failed to delete task results." },
+      { status: 500 }
+    );
+  }
+}
+
+export async function GET(request: Request) {
+  if (!process.env.MONGODB_URI) {
+    return Response.json({ photos: [] });
+  }
+
+  const { searchParams } = new URL(request.url);
+  const teamName = getString(searchParams.get("teamName"));
+  const ageCategoryId = getString(searchParams.get("ageCategoryId"));
+
+  if (!teamName || !ageCategoryId) {
+    return Response.json({ photos: [] });
+  }
+
+  try {
+    const client = await getMongoClient();
+    const db = client.db(process.env.MONGODB_DB ?? "skema_adventure");
+    const collection = db.collection("task_results");
+
+    const results = await collection
+      .find(
+        {
+          ageCategoryId,
+          photoFileId: { $ne: null },
+          teamName,
+        },
+        {
+          projection: {
+            _id: 1,
+            completedAt: 1,
+            locationId: 1,
+            photoUrl: 1,
+            taskStep: 1,
+            taskTitle: 1,
+          },
+        }
+      )
+      .sort({ taskStep: 1, completedAt: 1 })
+      .toArray();
+
+    return Response.json({
+      photos: results.map((result) => ({
+        completedAt:
+          result.completedAt instanceof Date
+            ? result.completedAt.toISOString()
+            : null,
+        id: result._id.toString(),
+        locationId: result.locationId,
+        photoUrl: result.photoUrl,
+        taskStep: result.taskStep,
+        taskTitle: result.taskTitle,
+      })),
+    });
+  } catch (error) {
+    console.error(error);
+    return Response.json(
+      { error: "Failed to load task result photos." },
+      { status: 500 }
+    );
+  }
+}
+
 export async function POST(request: Request) {
   const formData = await request.formData();
 
